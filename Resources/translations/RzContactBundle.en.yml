@@ -1,0 +1,44 @@
+rz_contact_contact: Contact
+rz_contact_contact_group: Contact
+
+breadcrumb:
+  link_contact_list: Contact
+
+list:
+  label_sender_email: Sender Email
+  label_sender_name: Sender Name
+  label_company: Company
+  label_subject: Subject
+  label_contact_no: Contact No
+  label_message: Message
+  label__action: Actions
+
+filter:
+  label_sender_email: Sender Email
+  label_sender_name: Sender Name
+  label_company: Company
+  label_subject: Subject
+  label_contact_no: Contact No
+  label_message: Message
+  label__action: Actions
+
+show:
+  label_sender_email: Sender Email
+  label_sender_name: Sender Name
+  label_company: Company
+  label_subject: Subject
+  label_contact_no: Contact No
+  label_message: Message
+  label__action: Actions
+
+form:
+  label_sender_email: Sender Email
+  label_sender_name: Sender Name
+  label_company: Company
+  label_subject: Subject
+  label__action: Actions
+  label_contact_no: Contact No
+  label_message: Message
+
+
+

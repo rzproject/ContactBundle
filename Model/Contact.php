@@ -9,14 +9,11 @@
 
 namespace Rz\ContactBundle\Model;
 
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\MaxLength;
-
 class Contact implements ContactInterface
 {
     protected $createdAt;
+
+    protected $updatedAt;
 
     protected $senderEmail;
 
@@ -25,16 +22,6 @@ class Contact implements ContactInterface
     protected $subject;
 
     protected $message;
-
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
 
     public function setSenderEmail($senderEmail)
     {
@@ -80,8 +67,37 @@ class Contact implements ContactInterface
         return $this->message;
     }
 
-    public function incrementCreatedAt()
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
     {
-        $this->createdAt = new \DateTime();
+        return $this->updatedAt;
     }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+
 }

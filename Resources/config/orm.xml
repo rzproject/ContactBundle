@@ -4,11 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="rz_contact.model.contact.class">Rz\ContactBundle\Entity\Contact</parameter>
-        <parameter key="rz_contact.manager.contact.class">Rz\ContactBundle\Entity\ContactManager</parameter>
-    </parameters>
-
     <services>
         <!-- Entity manager -->
         <service id="rz_contact.model_manager" alias="doctrine.orm.default_entity_manager" />

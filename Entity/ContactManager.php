@@ -2,21 +2,12 @@
 
 namespace Rz\ContactBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Rz\ContactBundle\Manager\ContactManager as BaseContactManager;
+use Sonata\CoreBundle\Model\BaseEntityManager;
 
-class ContactManager extends BaseContactManager
+use Sonata\DatagridBundle\Pager\Doctrine\Pager;
+use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
+
+class ContactManager extends BaseEntityManager
 {
-    protected $em;
-    protected $class;
-    protected $repository;
 
-    public function __construct(EntityManager $em, $class)
-    {
-        $this->em = $em;
-        $this->repository  = $em->getRepository($class);
-
-        $metadata = $em->getClassMetadata($class);
-        $this->class = $metadata->name;
-    }
 }

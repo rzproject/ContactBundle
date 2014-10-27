@@ -12,7 +12,15 @@ namespace Rz\ContactBundle;
 use Rz\ContactBundle\DependencyInjection\Compiler\ConnectorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle as BaseBundle;
+use Rz\ContactBundle\DependencyInjection\Compiler\OverrideServiceCompilerPass;
 
 class RzContactBundle extends BaseBundle
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new OverrideServiceCompilerPass());
+    }
 }

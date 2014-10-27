@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Config\Definition\Processor;
 
 use Symfony\Component\Config\FileLocator;
 
@@ -20,43 +21,177 @@ class RzContactExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $config = array();
-        foreach ($configs as $c) {
-            $config = array_merge($config, $c);
-        }
+
+        $processor = new Processor();
+        $configuration = new Configuration();
+        $config = $processor->processConfiguration($configuration, $configs);
+        $bundles = $container->getParameter('kernel.bundles');
 
         $loader = new XmlFileLoader($container, new FileLocator(array(__DIR__.'/../Resources/config')));
-        $loader->load('spam_detection.xml');
-        $loader->load('form.xml');
+
+        if (isset($bundles['SonataAdminBundle']) && isset($bundles['RzAdminBundle'])) {
+            $loader->load(sprintf('admin_%s.xml', $config['manager_type']));
+        }
+
         $loader->load('model.xml');
 
-        foreach($configs as $config_unit)
-        {
-            $this->doConfigLoad($config_unit, $container);
-        }
+        $config = $this->addDefaults($config);
+        $this->configureAdminClass($config, $container);
+        $this->configureClass($config, $container);
+        $this->configureTranslationDomain($config, $container);
+        $this->configureController($config, $container);
+        $this->configureRzTemplates($config, $container);
 
-        // load connector configs
-        foreach ($config['connectors'] as $connector => $attributes) {
-            $loader->load("connector_$connector.xml");
-        }
+        $loader->load('form.xml');
+        $this->configureContactForm($config, $container);
 
-        if(isset($config['contact']['form']['view']))
-        {
-            $container->setParameter('rz_contact.contact.form.view', $config['contact']['form']['view']);
-        }
-        else
-        {
-            $container->setParameter('rz_contact.contact.form.view', NULL);
-        }
+        $loader->load('spam_detection.xml');
+        $this->configureSpamDetection($config, $container);
+        $this->configureConnectors($config, $container);
 
-        $container->setAlias('rz_contact.contact.form.handler', $config['contact']['form']['handler']);
-
-        $this->remapParametersNamespaces($config['contact'], $container, array(
-            'form' => 'rz_contact.contact.form.%s',
-        ));
+//        $loader->load('spam_detection.xml');
+//        $loader->load('form.xml');
+//        $loader->load('model.xml');
+//
+//        foreach($configs as $config_unit)
+//        {
+//            $this->doConfigLoad($config_unit, $container);
+//        }
+//
+//        // load connector configs
+//        foreach ($config['connectors'] as $connector => $attributes) {
+//            $loader->load("connector_$connector.xml");
+//        }
+//
+//        if(isset($config['contact']['form']['view']))
+//        {
+//            $container->setParameter('rz_contact.contact.form.view', $config['contact']['form']['view']);
+//        }
+//        else
+//        {
+//            $container->setParameter('rz_contact.contact.form.view', NULL);
+//        }
+//
+//        $container->setAlias('rz_contact.contact.form.handler', $config['contact']['form']['handler']);
+//
+//        $this->remapParametersNamespaces($config['contact'], $container, array(
+//            'form' => 'rz_contact.contact.form.%s',
+//        ));
     }
 
-    public function doConfigLoad(array $config, ContainerBuilder $container)
+    /**
+     * @param array $config
+     *
+     * @return array
+     */
+    public function addDefaults(array $config)
+    {
+        if ('orm' === $config['manager_type']) {
+            $modelType = 'Entity';
+        } elseif ('mongodb' === $config['manager_type']) {
+            $modelType = 'Document';
+        }
+
+        $defaultConfig['class']['contact']  = sprintf('Application\\Rz\\ContactBundle\\%s\\Contact', $modelType);
+
+        return array_replace_recursive($defaultConfig, $config);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureClass($config, ContainerBuilder $container)
+    {
+        if ('orm' === $config['manager_type']) {
+            $modelType = 'entity';
+        } elseif ('mongodb' === $config['manager_type']) {
+            $modelType = 'document';
+        }
+
+        $container->setParameter(sprintf('rz_contact.admin.contact.%s', $modelType), $config['class']['contact']['model']);
+        $container->setParameter('rz_contact.model.contact.class', $config['class']['contact']['model']);
+        $container->setParameter('rz_contact.manager.contact.class', $config['class']['contact']['manager']);
+
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureAdminClass($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.admin.contact.class', $config['admin']['contact']['class']);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureTranslationDomain($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.admin.contact.translation_domain', $config['admin']['contact']['translation']);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureController($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.admin.contact.controller', $config['admin']['contact']['controller']);
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureRzTemplates($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.configuration.contact.templates', $config['admin']['contact']['templates']);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function configureContactForm($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.form.contact.class', $config['contact']['form']['class']);
+        $container->setParameter('rz_contact.form.contact.name', $config['contact']['form']['name']);
+        $container->setParameter('rz_contact.form.contact.type', $config['contact']['form']['type']);
+        $container->setParameter('rz_contact.form.contact.handler', $config['contact']['form']['handler']);
+        $container->setParameter('rz_contact.form.contact.validation_groups', $config['contact']['form']['validation_groups']);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function configureSpamDetection($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.spam_detector.class', $config['spam_detector']['class']);
+
+
+        if(isset($config['spam_detector']) && isset($config['spam_detector']['service'])) {
+            $container->setAlias('rz_spam_detector', $config['spam_detector']['service']);
+        } else {
+            $container->setAlias('rz_spam_detector', 'rz_contact.spam_detector.stub');
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function configureConnectors($config, ContainerBuilder $container)
     {
         // Connectors
         if(!isset($config['connectors']))
@@ -64,8 +199,7 @@ class RzContactExtension extends Extension
             $config['connectors'] = array();
         }
 
-        foreach($config['connectors'] as $connector => $attributes)
-        {
+        foreach($config['connectors'] as $connector => $attributes) {
             // custom connectors
             if(array_key_exists("class", (array) $attributes))
             {
@@ -80,35 +214,55 @@ class RzContactExtension extends Extension
                 $this->$mappingMethod($attributes, $container);
             }
         }
-
-        // Contact form and entities
-        if(array_key_exists("model", $config)
-        && isset($config['model']))
-        {
-            $container->setParameter('rz_contact.model.contact.class', $config['model']);
-        }
-
-        if(array_key_exists("form", $config)
-        && isset($config['form']))
-        {
-            $container->setParameter('rz_contact.form.contact.class', $config['form']);
-        }
-        
-        //add the spam detection
-        if(isset($config['spam_detector']) && isset($config['spam_detector']['class']))
-        {
-            $container->setParameter('rz_contact.spam_detector.class', $config['spam_detector']['class']);
-        }
-        if(isset($config['spam_detector']) && isset($config['spam_detector']['service']))
-        {
-            $container->setAlias('rz_spam_detector', $config['spam_detector']['service']);
-        }
-        else
-        {
-            $container->setAlias('rz_spam_detector', 'rz_contact.spam_detector.stub');
-        }
     }
 
+
+
+//    public function doConfigLoad(array $config, ContainerBuilder $container)
+//    {
+//        // Connectors
+//        if(!isset($config['connectors']))
+//        {
+//            $config['connectors'] = array();
+//        }
+//
+//        foreach($config['connectors'] as $connector => $attributes) {
+//            // custom connectors
+//            if(array_key_exists("class", (array) $attributes))
+//            {
+//                // TODO
+//                continue;
+//            }
+//
+//            // built-in connector configuration
+//            $mappingMethod = "map" . ucfirst($connector) . "ConnectorParameters";
+//            if(method_exists($this, $mappingMethod))
+//            {
+//                $this->$mappingMethod($attributes, $container);
+//            }
+//        }
+//
+//        // Contact form and entities
+//        if(array_key_exists("model", $config) && isset($config['model'])) {
+//            $container->setParameter('rz_contact.model.contact.class', $config['model']);
+//        }
+//
+//        if(array_key_exists("form", $config) && isset($config['form'])) {
+//            $container->setParameter('rz_contact.form.contact.class', $config['form']);
+//        }
+//
+//        //add the spam detection
+//        if(isset($config['spam_detector']) && isset($config['spam_detector']['class'])) {
+//            $container->setParameter('rz_contact.spam_detector.class', $config['spam_detector']['class']);
+//        }
+//
+//        if(isset($config['spam_detector']) && isset($config['spam_detector']['service'])) {
+//            $container->setAlias('rz_spam_detector', $config['spam_detector']['service']);
+//        } else {
+//            $container->setAlias('rz_spam_detector', 'rz_contact.spam_detector.stub');
+//        }
+//    }
+//
     public function mapEmailConnectorParameters($config, ContainerBuilder $container)
     {
         $container->setParameter('rz_contact.email.recipients', $config['recipients']);
@@ -116,9 +270,7 @@ class RzContactExtension extends Extension
 
     public function mapDatabaseConnectorParameters($config, ContainerBuilder $container)
     {
-        if(!isset($config['db_driver'])
-        || !in_array(strtolower($config['db_driver']), array('orm', 'mongodb')))
-        {
+        if(!isset($config['db_driver']) || !in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
 

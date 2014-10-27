@@ -6,14 +6,14 @@
 
     <parameters>
         <parameter key="rz_contact.form.contact.class">Rz\ContactBundle\Form\Type\ContactFormType</parameter>
-        <parameter key="rz_contact.contact.form.name">rz_contact_contact_form</parameter>
+        <parameter key="rz_contact.form.contact.name">rz_contact_contact_form</parameter>
     </parameters>
 
     <services>
 
         <service id="rz_contact.contact.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
-            <argument>%rz_contact.contact.form.name%</argument>
-            <argument>%rz_contact.contact.form.type%</argument>
+            <argument>%rz_contact.form.contact.name%</argument>
+            <argument>%rz_contact.form.contact.type%</argument>
             <argument>null</argument>
         </service>
 

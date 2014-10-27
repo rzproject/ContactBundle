@@ -11,23 +11,25 @@ namespace Rz\ContactBundle\Model;
 
 interface ContactInterface
 {
-    function setSenderEmail($senderEmail);
+    public function setSenderEmail($senderEmail);
 
-    function getSenderEmail();
+    public function getSenderEmail();
 
-    function setSenderName($senderName);
+    public function setSenderName($senderName);
 
-    function getSenderName();
+    public function getSenderName();
 
-    function setSubject($subject);
+    public function setSubject($subject);
 
-    function getSubject();
+    public function getSubject();
 
-    function setMessage($message);
+    public function setMessage($message);
 
-    function getMessage();
+    public function getMessage();
 
-    function incrementCreatedAt();
+    public function getCreatedAt();
 
-    function getCreatedAt();
+    public function getUpdatedAt();
+
+    public function setUpdatedAt($updatedAt);
 }
