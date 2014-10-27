@@ -23,5 +23,4 @@
     "autoload": {
         "psr-4": { "Rz\\ContactBundle\\": "" }
     }
-
 }
