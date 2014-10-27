@@ -5,18 +5,18 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ihqs_contact.model.contact.class">IHQS\ContactBundle\Entity\Contact</parameter>
-        <parameter key="ihqs_contact.manager.contact.class">IHQS\ContactBundle\Entity\ContactManager</parameter>
+        <parameter key="rz_contact.model.contact.class">Rz\ContactBundle\Entity\Contact</parameter>
+        <parameter key="rz_contact.manager.contact.class">Rz\ContactBundle\Entity\ContactManager</parameter>
     </parameters>
 
     <services>
         <!-- Entity manager -->
-        <service id="ihqs_contact.model_manager" alias="doctrine.orm.default_entity_manager" />
+        <service id="rz_contact.model_manager" alias="doctrine.orm.default_entity_manager" />
 
         <!-- Managers -->
-        <service id="ihqs_contact.contact_manager" class="%ihqs_contact.manager.contact.class%">
-            <argument type="service" id="ihqs_contact.model_manager" />
-            <argument>%ihqs_contact.model.contact.class%</argument>
+        <service id="rz_contact.contact_manager" class="%rz_contact.manager.contact.class%">
+            <argument type="service" id="rz_contact.model_manager" />
+            <argument>%rz_contact.model.contact.class%</argument>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>

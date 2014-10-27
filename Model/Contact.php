@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Antoine Berranger <antoine@ihqs.net>
+ * (c) Mell M. Zamora <rzproject.org> and creadits to the original author Antoine Berranger <antoine@ihqs.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace IHQS\ContactBundle\Model;
+namespace Rz\ContactBundle\Model;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;

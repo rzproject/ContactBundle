@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ihqs_contact.model.contact.class">IHQS\ContactBundle\Model\Contact</parameter>
-        <parameter key="ihqs_contact.manager.contact.class">IHQS\ContactBundle\Manager\ContactManager</parameter>
+        <parameter key="rz_contact.model.contact.class">Rz\ContactBundle\Model\Contact</parameter>
+        <parameter key="rz_contact.manager.contact.class">Rz\ContactBundle\Manager\ContactManager</parameter>
     </parameters>
 
     <services>
-        <service id="ihqs_contact.contact_manager" class="%ihqs_contact.manager.contact.class%">
-            <argument>%ihqs_contact.model.contact.class%</argument>
+        <service id="rz_contact.contact_manager" class="%rz_contact.manager.contact.class%">
+            <argument>%rz_contact.model.contact.class%</argument>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * (c) Antoine Berranger <antoine@ihqs.net>
+ * (c) Mell M. Zamora <rzproject.org> and creadits to the original author Antoine Berranger <antoine@ihqs.net>
  * (c) Laszlo Horvath <pentarim@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace IHQS\ContactBundle\Form\Type;
+namespace Rz\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,6 +43,6 @@ class ContactFormType extends AbstractType
 
     public function getName()
     {
-        return 'ihqs_contact_contact';
+        return 'rz_contact_contact';
     }
 }

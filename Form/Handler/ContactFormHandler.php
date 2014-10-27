@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Antoine Berranger <antoine@ihqs.net>
+ * (c) Mell M. Zamora <rzproject.org> and creadits to the original author Antoine Berranger <antoine@ihqs.net>
  * (c) Laszlo Horvath <pentarim@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
@@ -9,17 +9,17 @@
  */
 
 
-namespace IHQS\ContactBundle\Form\Handler;
+namespace Rz\ContactBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 // use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-use IHQS\ContactBundle\Model\ContactInterface;
-use IHQS\ContactBundle\Manager\ContactManagerInterface;
-use IHQS\ContactBundle\Event;
-use IHQS\ContactBundle\Event\Events;
+use Rz\ContactBundle\Model\ContactInterface;
+use Rz\ContactBundle\Manager\ContactManagerInterface;
+use Rz\ContactBundle\Event;
+use Rz\ContactBundle\Event\Events;
 
 class ContactFormHandler
 {
@@ -58,7 +58,7 @@ class ContactFormHandler
     protected function onSuccess(ContactInterface $contact)
     {
         //$event = new Event($contact, 'form.contact_submission');
-        //$this->eventDispatcher->dispatch('ihqs_contact.contact_submission',$event);
+        //$this->eventDispatcher->dispatch('rz_contact.contact_submission',$event);
 
         $this->eventDispatcher->dispatch(Events::onContactRequest, new Event\ContactEvent($contact));
 

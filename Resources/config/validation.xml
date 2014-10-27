@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-    <class name="IHQS\ContactBundle\Model\Contact">
+    <class name="Rz\ContactBundle\Model\Contact">
 
         <property name="senderEmail">
             <constraint name="NotBlank">

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Antoine Berranger <antoine@ihqs.net>
+ * (c) Mell M. Zamora <rzproject.org> and creadits to the original author Antoine Berranger <antoine@ihqs.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace IHQS\ContactBundle\Controller;
+namespace Rz\ContactBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +17,12 @@ class ContactController extends Controller
 {
     public function formAction($method = 'GET')
     {
-        $contact = $this->get('ihqs_contact.contact_manager')->createContact();
+        $contact = $this->get('rz_contact.contact_manager')->createContact();
 
-        $form        = $this->get('ihqs_contact.contact.form');
-        $formHandler = $this->get('ihqs_contact.contact.form.handler');
+        $form        = $this->get('rz_contact.contact.form');
+        $formHandler = $this->get('rz_contact.contact.form.handler');
 
-        $formView = $this->container->getParameter('ihqs_contact.contact.form.view');
+        $formView = $this->container->getParameter('rz_contact.contact.form.view');
         $formView = ($formView) ? $formView : 'IHQSContactBundle:Contact:form.html.twig';
 
         if ($method == 'POST') {

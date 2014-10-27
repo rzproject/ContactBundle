@@ -1,5 +1,5 @@
 {
-    "name": "rmzamora/contact-bundle",
+    "name": "rz/contact-bundle",
     "description": "forked version of ihqs/contact-bundle - Contact form integration for symfony",
     "keywords": ["package", "symfony", "contact"],
     "type": "library",
@@ -21,7 +21,7 @@
     },
 
     "autoload": {
-        "psr-4": { "Rmzamora\\ContactBundle\\": "" }
+        "psr-4": { "Rz\\ContactBundle\\": "" }
     }
 
 }

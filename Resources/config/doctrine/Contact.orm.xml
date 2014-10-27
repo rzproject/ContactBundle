@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="IHQS\ContactBundle\Entity\Contact" table="ihqs_contact">
+    <entity name="Rz\ContactBundle\Entity\Contact" table="rz_contact">
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="incrementCreatedAt" />

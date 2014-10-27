@@ -1,6 +1,6 @@
 <?php
 
-namespace IHQS\ContactBundle\SpamDetection;
+namespace Rz\ContactBundle\SpamDetection;
 
 /**
  * Default Stub Spam detector

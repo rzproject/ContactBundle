@@ -1,9 +1,9 @@
 <?php
 
-namespace IHQS\ContactBundle\Event;
+namespace Rz\ContactBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use IHQS\ContactBundle\Model\ContactInterface;
+use Rz\ContactBundle\Model\ContactInterface;
 
 class ContactEvent extends Event
 {

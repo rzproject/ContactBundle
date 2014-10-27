@@ -1,9 +1,9 @@
 <?php
 
-namespace IHQS\ContactBundle\Entity;
+namespace Rz\ContactBundle\Entity;
 
 use Doctrine\ORM\DocumentManager;
-use IHQS\ContactBundle\Manager\ContactManager as BaseContactManager;
+use Rz\ContactBundle\Manager\ContactManager as BaseContactManager;
 
 class ContactManager extends BaseContactManager
 {

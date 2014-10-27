@@ -1,19 +1,19 @@
 <?php
 
 /**
- * (c) Antoine Berranger <antoine@ihqs.net>
+ * (c) Mell M. Zamora <rzproject.org> and creadits to the original author Antoine Berranger <antoine@ihqs.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace IHQS\ContactBundle\Connector;
+namespace Rz\ContactBundle\Connector;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\EventDispatcher\Event;
-use IHQS\ContactBundle\Model\ContactInterface;
-use IHQS\ContactBundle\Event\ContactEvent;
+use Rz\ContactBundle\Model\ContactInterface;
+use Rz\ContactBundle\Event\ContactEvent;
 
 abstract class BaseConnector extends ContainerAware
 {
@@ -68,7 +68,7 @@ abstract class BaseConnector extends ContainerAware
     }
 
     /**
-     * set the spam detector IHQS\ContactBundle\SpamDetection\False by default
+     * set the spam detector Rz\ContactBundle\SpamDetection\False by default
      * 
      * @param type $spamDetector
      */

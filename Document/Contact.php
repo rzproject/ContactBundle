@@ -1,8 +1,8 @@
 <?php
 
-namespace IHQS\ContactBundle\Document;
+namespace Rz\ContactBundle\Document;
 
-use IHQS\ContactBundle\Model\Contact as BaseContact;
+use Rz\ContactBundle\Model\Contact as BaseContact;
 
 class Contact extends BaseContact
 {

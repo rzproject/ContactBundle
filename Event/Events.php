@@ -1,14 +1,14 @@
 <?php
 
-namespace IHQS\ContactBundle\Event;
+namespace Rz\ContactBundle\Event;
 
 final class Events
 {
     /**
-     * The ihqs_contact.onContactRequest event is thrown each time the contact
+     * The rz_contact.onContactRequest event is thrown each time the contact
      * form is submitted
      *
      * @var string
      */
-    const onContactRequest = 'ihqs_contact.onContactRequest';
+    const onContactRequest = 'rz_contact.onContactRequest';
 }

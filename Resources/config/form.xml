@@ -5,27 +5,27 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ihqs_contact.form.contact.class">IHQS\ContactBundle\Form\Type\ContactFormType</parameter>
-        <parameter key="ihqs_contact.contact.form.name">ihqs_contact_contact_form</parameter>
+        <parameter key="rz_contact.form.contact.class">Rz\ContactBundle\Form\Type\ContactFormType</parameter>
+        <parameter key="rz_contact.contact.form.name">rz_contact_contact_form</parameter>
     </parameters>
 
     <services>
 
-        <service id="ihqs_contact.contact.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
-            <argument>%ihqs_contact.contact.form.name%</argument>
-            <argument>%ihqs_contact.contact.form.type%</argument>
+        <service id="rz_contact.contact.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+            <argument>%rz_contact.contact.form.name%</argument>
+            <argument>%rz_contact.contact.form.type%</argument>
             <argument>null</argument>
         </service>
 
-        <service id="ihqs_contact.contact.form.type" class="%ihqs_contact.form.contact.class%">
-            <tag name="form.type" alias="ihqs_contact_contact" />
-            <argument>%ihqs_contact.model.contact.class%</argument>
+        <service id="rz_contact.contact.form.type" class="%rz_contact.form.contact.class%">
+            <tag name="form.type" alias="rz_contact_contact" />
+            <argument>%rz_contact.model.contact.class%</argument>
         </service>
 
-        <service id="ihqs_contact.contact.form.handler.default" class="IHQS\ContactBundle\Form\Handler\ContactFormHandler" scope="request" public="false">
-            <argument type="service" id="ihqs_contact.contact.form" />
+        <service id="rz_contact.contact.form.handler.default" class="Rz\ContactBundle\Form\Handler\ContactFormHandler" scope="request" public="false">
+            <argument type="service" id="rz_contact.contact.form" />
             <argument type="service" id="request" />
-            <argument type="service" id="ihqs_contact.contact_manager" />
+            <argument type="service" id="rz_contact.contact_manager" />
             <argument type="service" id="event_dispatcher" />
         </service>
 

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Antoine Berranger <antoine@ihqs.net>
+ * (c) Mell M. Zamora <rzproject.org> and creadits to the original author Antoine Berranger <antoine@ihqs.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace IHQS\ContactBundle\DependencyInjection;
+namespace Rz\ContactBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use Symfony\Component\Config\FileLocator;
 
-class IHQSContactExtension extends Extension
+class RzContactExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -42,17 +42,17 @@ class IHQSContactExtension extends Extension
 
         if(isset($config['contact']['form']['view']))
         {
-            $container->setParameter('ihqs_contact.contact.form.view', $config['contact']['form']['view']);
+            $container->setParameter('rz_contact.contact.form.view', $config['contact']['form']['view']);
         }
         else
         {
-            $container->setParameter('ihqs_contact.contact.form.view', NULL);
+            $container->setParameter('rz_contact.contact.form.view', NULL);
         }
 
-        $container->setAlias('ihqs_contact.contact.form.handler', $config['contact']['form']['handler']);
+        $container->setAlias('rz_contact.contact.form.handler', $config['contact']['form']['handler']);
 
         $this->remapParametersNamespaces($config['contact'], $container, array(
-            'form' => 'ihqs_contact.contact.form.%s',
+            'form' => 'rz_contact.contact.form.%s',
         ));
     }
 
@@ -85,33 +85,33 @@ class IHQSContactExtension extends Extension
         if(array_key_exists("model", $config)
         && isset($config['model']))
         {
-            $container->setParameter('ihqs_contact.model.contact.class', $config['model']);
+            $container->setParameter('rz_contact.model.contact.class', $config['model']);
         }
 
         if(array_key_exists("form", $config)
         && isset($config['form']))
         {
-            $container->setParameter('ihqs_contact.form.contact.class', $config['form']);
+            $container->setParameter('rz_contact.form.contact.class', $config['form']);
         }
         
         //add the spam detection
         if(isset($config['spam_detector']) && isset($config['spam_detector']['class']))
         {
-            $container->setParameter('ihqs_contact.spam_detector.class', $config['spam_detector']['class']);
+            $container->setParameter('rz_contact.spam_detector.class', $config['spam_detector']['class']);
         }
         if(isset($config['spam_detector']) && isset($config['spam_detector']['service']))
         {
-            $container->setAlias('ihqs_spam_detector', $config['spam_detector']['service']);        
+            $container->setAlias('rz_spam_detector', $config['spam_detector']['service']);
         }
         else
         {
-            $container->setAlias('ihqs_spam_detector', 'ihqs_contact.spam_detector.stub');
+            $container->setAlias('rz_spam_detector', 'rz_contact.spam_detector.stub');
         }
     }
 
     public function mapEmailConnectorParameters($config, ContainerBuilder $container)
     {
-        $container->setParameter('ihqs_contact.email.recipients', $config['recipients']);
+        $container->setParameter('rz_contact.email.recipients', $config['recipients']);
     }
 
     public function mapDatabaseConnectorParameters($config, ContainerBuilder $container)

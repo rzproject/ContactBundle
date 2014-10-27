@@ -22,15 +22,15 @@ Plug any listener you want to your contact form's submission
 **Using submodules**
 If you prefer instead to use git submodules, the run the following:
 
-    $ git submodule add git://github.com/ihqs/ContactBundle.git    src/IHQS/ContactBundle
+    $ git submodule add git://github.com/rz/ContactBundle.git    src/Rz/ContactBundle
 
 **Using the vendors script**
 
 Add the following lines in your `deps` file:
 
-    [IHQSContactBundle]
-        git=git://github.com/ihqs/ContactBundle.git
-        target=bundles/IHQS/ContactBundle
+    [RzContactBundle]
+        git=git://github.com/rz/ContactBundle.git
+        target=bundles/Rz/ContactBundle
 
 If you want to connect the email listener, install SwitfMailer and configure it
 
@@ -52,11 +52,11 @@ In your config, add :
         username:   name@domain.tld
         password:   your_secret
 
-## Add the IHQS namespace to your autoloader
+## Add the Rz namespace to your autoloader
 
     // app/autoload.php
     $loader->registerNamespaces(array(
-        'IHQS' => __DIR__.'/../vendor/bundles',
+        'Rz' => __DIR__.'/../vendor/bundles',
         // your other namespaces
     );
 
@@ -67,7 +67,7 @@ In your config, add :
     {
         return array(
             // ...
-            new IHQS\ContactBundle\IHQSContactBundle(),
+            new Rz\ContactBundle\RzContactBundle(),
             // ...
         );
     }
@@ -81,7 +81,7 @@ In your config, add :
 
 In your template, you just have to add (if you are using Twig)
 
-    {% render "IHQSContactBundle:Contact:form" with { 'method': app.request.method }, { 'query': app.request.request.all } %}
+    {% render "RzContactBundle:Contact:form" with { 'method': app.request.method }, { 'query': app.request.request.all } %}
 
 Since version 2.0.13 of Symfony you must send your form "POST" data using "query" parameter.
 That's because "render" tag is being processed as a sub-request.
@@ -94,18 +94,18 @@ to let the embedded ContactController recognize that your form is submitted.
 
 In your app/config.yml (given you are using YAML for your configuration file)
 
-    ihqs_contact:
+    rz_contact:
         contact:
             form:
-                type:               ihqs_contact_contact
-                handler:            ihqs_contact.contact.form.handler.default
-                name:               ihqs_contact_contact_form
+                type:               rz_contact_contact
+                handler:            rz_contact.contact.form.handler.default
+                name:               rz_contact_contact_form
                 validation_groups:  [Contact]
         form: ~                                 # (optional) class managing the contact form
         model: ~                                # (optional) class managing the model
         connectors:                             # the list of "listeners" (or connectors here)
             email:                              # connecting the email listener
-                recipients: contact@ihqs.net    # giving him the recipient(s) email(s)
+                recipients: contact@rz.net    # giving him the recipient(s) email(s)
             database:                           # connecting the database listener
                 db_driver: orm                  # giving him the database driver
             file: ~                             # connecting the file logger listener
@@ -113,15 +113,15 @@ In your app/config.yml (given you are using YAML for your configuration file)
 If you want a simple contact form only sending an email to you contact mailbox, then you just have to
 add to your configuration file
 
-    ihqs_contact:
+    rz_contact:
         connectors:
             email:
                 recipients: cont@ct.me
 
-It you want to use a custom template/view instead of the default one (IHQSContactBundle:Contact:form.html.twig),
+It you want to use a custom template/view instead of the default one (RzContactBundle:Contact:form.html.twig),
 you can add the view parameter with the name of your view. Example:
 
-	ihqs_contact:
+	rz_contact:
 	    contact:
 	        form:
 				view:               CompanyExampleBundle:Contact:form.html.twig
@@ -135,7 +135,7 @@ see the docs for more information.
 
 define the service in your service container
 
-    ihqs_contact:
+    rz_contact:
         spam_detector:
             service: ornicar_akismet
 
@@ -143,7 +143,7 @@ now all your Contact Request will be checked by Akismet.
 
 if you want to implement your own Detector simply set the class for the detector
 
-    ihqs_contact:
+    rz_contact:
         spam_detector:
             class: My\Bundle\MyDetector
 
@@ -151,7 +151,7 @@ note that the class should implement the ``SpamDetectorInterface``
 
 or if you want a whole new service:
 
-    ihqs_contact:
+    rz_contact:
         spam_detector:
             service: my_detector_service
 

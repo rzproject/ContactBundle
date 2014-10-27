@@ -5,11 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ihqs_contact.spam_detector.class">IHQS\ContactBundle\SpamDetection\FalseDetector</parameter>
+        <parameter key="rz_contact.spam_detector.class">Rz\ContactBundle\SpamDetection\FalseDetector</parameter>
     </parameters>
 
     <services>        
-        <service id="ihqs_contact.spam_detector.stub" class="%ihqs_contact.spam_detector.class%">
+        <service id="rz_contact.spam_detector.stub" class="%rz_contact.spam_detector.class%">
         </service>
     </services>
 

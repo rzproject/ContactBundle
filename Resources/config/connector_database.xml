@@ -5,17 +5,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ihqs_contact.connectors.database.event_listener.class">IHQS\ContactBundle\Connector\Database</parameter>
+        <parameter key="rz_contact.connectors.database.event_listener.class">Rz\ContactBundle\Connector\Database</parameter>
     </parameters>
 
     <services>
-        <service id="ihqs_contact.connectors.database.event_listener" class="%ihqs_contact.connectors.database.event_listener.class%">
-            <tag name="kernel.event_listener" event="ihqs_contact.onContactRequest" method="onContactRequest" />
+        <service id="rz_contact.connectors.database.event_listener" class="%rz_contact.connectors.database.event_listener.class%">
+            <tag name="kernel.event_listener" event="rz_contact.onContactRequest" method="onContactRequest" />
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
             <call method="setSpamDetector">
-                <argument type="service" id="ihqs_spam_detector" />
+                <argument type="service" id="rz_spam_detector" />
             </call>
         </service>
     </services>
