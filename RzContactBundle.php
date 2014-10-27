@@ -13,15 +13,6 @@ use Rz\ContactBundle\DependencyInjection\Compiler\ConnectorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle as BaseBundle;
 
-class IHQSContactBundle extends BaseBundle
+class RzContactBundle extends BaseBundle
 {
-    public function getNamespace()
-    {
-        return __NAMESPACE__;
-    }
-
-    public function getPath()
-    {
-        return strtr(__DIR__, '\\', '/');
-    }
 }
