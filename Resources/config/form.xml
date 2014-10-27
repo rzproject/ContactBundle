@@ -11,24 +11,23 @@
 
     <services>
 
-        <service id="rz_contact.contact.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+        <service id="rz_contact.form.contact" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
             <argument>%rz_contact.form.contact.name%</argument>
             <argument>%rz_contact.form.contact.type%</argument>
             <argument>null</argument>
         </service>
 
-        <service id="rz_contact.contact.form.type" class="%rz_contact.form.contact.class%">
-            <tag name="form.type" alias="rz_contact_contact" />
+        <service id="rz_contact.form.contact.type" class="%rz_contact.form.contact.class%">
+            <tag name="form.type" alias="rz_contact_contact_form" />
             <argument>%rz_contact.model.contact.class%</argument>
         </service>
 
-        <service id="rz_contact.contact.form.handler.default" class="Rz\ContactBundle\Form\Handler\ContactFormHandler" scope="request" public="false">
-            <argument type="service" id="rz_contact.contact.form" />
+        <service id="rz_contact.form.contact.handler.default" class="Rz\ContactBundle\Form\Handler\ContactFormHandler" scope="request" public="false">
+            <argument type="service" id="rz_contact.form.contact" />
             <argument type="service" id="request" />
             <argument type="service" id="rz_contact.contact_manager" />
             <argument type="service" id="event_dispatcher" />
         </service>
-
     </services>
 
 

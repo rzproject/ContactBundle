@@ -43,6 +43,6 @@ class ContactFormType extends AbstractType
 
     public function getName()
     {
-        return 'rz_contact_contact';
+        return 'rz_contact_contact_form';
     }
 }

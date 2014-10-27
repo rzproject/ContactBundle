@@ -169,8 +169,10 @@ class RzContactExtension extends Extension
         $container->setParameter('rz_contact.form.contact.class', $config['contact']['form']['class']);
         $container->setParameter('rz_contact.form.contact.name', $config['contact']['form']['name']);
         $container->setParameter('rz_contact.form.contact.type', $config['contact']['form']['type']);
-        $container->setParameter('rz_contact.form.contact.handler', $config['contact']['form']['handler']);
         $container->setParameter('rz_contact.form.contact.validation_groups', $config['contact']['form']['validation_groups']);
+        $container->setParameter('rz_contact.form.contact.view', $config['contact']['form']['view']);
+
+        $container->setAlias('rz_contact.form.contact.handler', $config['contact']['form']['handler']);
     }
 
     /**

@@ -10,11 +10,8 @@
 
         <!-- Managers -->
         <service id="rz_contact.contact_manager" class="%rz_contact.manager.contact.class%">
-            <argument type="service" id="rz_contact.model_manager" />
             <argument>%rz_contact.model.contact.class%</argument>
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
+            <argument type="service" id="doctrine" />
         </service>
     </services>
 

@@ -20,10 +20,10 @@ class ContactController extends Controller
         $contact = $this->get('rz_contact.contact_manager')->createContact();
 
         $form        = $this->get('rz_contact.contact.form');
-        $formHandler = $this->get('rz_contact.contact.form.handler');
+        $formHandler = $this->get('rz_contact.form.contact.handler');
 
-        $formView = $this->container->getParameter('rz_contact.contact.form.view');
-        $formView = ($formView) ? $formView : 'IHQSContactBundle:Contact:form.html.twig';
+        $formView = $this->container->getParameter('rz_contact.form.contact.view');
+        $formView = ($formView) ? $formView : 'RzContactBundle:Contact:form.html.twig';
 
         if ($method == 'POST') {
             if ($formHandler->process($contact)) {

@@ -10,4 +10,11 @@ use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 class ContactManager extends BaseEntityManager
 {
 
+    public function createContact()
+    {
+        $class = $this->getClass();
+
+        return new $class();
+    }
+
 }

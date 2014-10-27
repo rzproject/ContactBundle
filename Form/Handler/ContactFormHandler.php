@@ -14,10 +14,10 @@ namespace Rz\ContactBundle\Form\Handler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 // use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use Rz\ContactBundle\Model\ContactInterface;
-use Rz\ContactBundle\Manager\ContactManagerInterface;
+use Sonata\CoreBundle\Model\ManagerInterface;
 use Rz\ContactBundle\Event;
 use Rz\ContactBundle\Event\Events;
 
@@ -28,7 +28,7 @@ class ContactFormHandler
     protected $contactManager;
     protected $eventDispatcher;
 
-    public function __construct(Form $form, Request $request, ContactManagerInterface $contactManager, EventDispatcher $eventDispatcher)
+    public function __construct(Form $form, Request $request, ManagerInterface $contactManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->form            = $form;
         $this->request         = $request;
