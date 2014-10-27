@@ -1,6 +1,6 @@
 {
-    "name": "ihqs/contact-bundle",
-    "description": "Contact form integration for symfony",
+    "name": "rmzamora/contact-bundle",
+    "description": "forked version of ihqs/contact-bundle - Contact form integration for symfony",
     "keywords": ["package", "symfony", "contact"],
     "type": "library",
     "license": "MIT",
@@ -9,6 +9,10 @@
             "name": "ihqs",
             "email": "contact@ihqs.net",
             "homepage": "http://www.ihqs.net"
+        },
+        {
+            "name":     "mellzamora",
+            "homepage": "https://github.com/rmzamora"
         }
     ],
     "require": {
@@ -17,8 +21,7 @@
     },
 
     "autoload": {
-        "psr-0": { "IHQS\\ContactBundle": "" }
-    },
+        "psr-4": { "Rmzamora\\ContactBundle\\": "" }
+    }
 
-    "target-dir": "IHQS/ContactBundle"
 }
