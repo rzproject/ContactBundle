@@ -6,10 +6,13 @@
 
     <parameters>
         <parameter key="rz_contact.spam_detector.class">Rz\ContactBundle\SpamDetection\FalseDetector</parameter>
+        <parameter key="rz_contact.form.extension.provider.timed_spam.class">Rz\ContactBundle\Form\Extension\Spam\Provider\SessionTimedSpamProvider</parameter>
     </parameters>
 
     <services>        
-        <service id="rz_contact.spam_detector.stub" class="%rz_contact.spam_detector.class%">
+        <service id="rz_contact.spam_detector.stub" class="%rz_contact.spam_detector.class%"></service>
+        <service id="rz_contact.form.extension.provider.timed_spam" class="%rz_contact.form.extension.provider.timed_spam.class%">
+            <argument type="service" id="session" />
         </service>
     </services>
 

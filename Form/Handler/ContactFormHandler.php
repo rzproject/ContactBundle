@@ -15,11 +15,13 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 // use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormError;
 
 use Rz\ContactBundle\Model\ContactInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Rz\ContactBundle\Event;
 use Rz\ContactBundle\Event\Events;
+use Rz\ContactBundle\Form\Extension\Spam\Provider\TimedSpamProviderInterface;
 
 class ContactFormHandler
 {
@@ -27,13 +29,15 @@ class ContactFormHandler
     protected $request;
     protected $contactManager;
     protected $eventDispatcher;
+    protected $timeProvider;
 
-    public function __construct(Form $form, Request $request, ManagerInterface $contactManager, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Form $form, Request $request, ManagerInterface $contactManager, EventDispatcherInterface $eventDispatcher, TimedSpamProviderInterface $timeProvider)
     {
         $this->form            = $form;
         $this->request         = $request;
         $this->contactManager  = $contactManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->timeProvider = $timeProvider;
     }
 
     public function process(ContactInterface $contact)
@@ -44,12 +48,24 @@ class ContactFormHandler
 
         $this->form->setData($contact);
 
-        $this->form->bindRequest($this->request);
+        //TODO: put it on config & dependecy injection
+        $options = array('min' => 30, 'max' => 3600, 'message' => 'Opps you submited the form too quickly.');
 
-        if ($this->form->isValid()) {
-            $this->onSuccess($contact);
+        if ('POST' == $this->request->getMethod()) {
+            $this->form->handleRequest($this->request);
 
-            return true;
+            if ($this->form->isValid()) {
+                if($this->timeProvider->isFormTimeValid($this->form->getName(), $options)) {
+                    $this->onSuccess($contact);
+                    return true;
+                } else {
+                    $errorMessage = $options['message'];
+//                if (null !== $this->translator) {
+//                    $errorMessage = $this->translator->trans($errorMessage, array(), $this->translationDomain);
+//                }
+                    $this->form->addError(new FormError($errorMessage));
+                }
+            }
         }
 
         return false;
@@ -57,12 +73,11 @@ class ContactFormHandler
 
     protected function onSuccess(ContactInterface $contact)
     {
-        //$event = new Event($contact, 'form.contact_submission');
-        //$this->eventDispatcher->dispatch('rz_contact.contact_submission',$event);
-
         $this->eventDispatcher->dispatch(Events::onContactRequest, new Event\ContactEvent($contact));
+        $this->contactManager->save($contact);
 
-
-        //$this->userManager->updateUser($user);
+        if($this->timeProvider->hasFormTime($this->form->getName())) {
+            $this->timeProvider->removeFormTime($this->form->getName());
+        }
     }
 }

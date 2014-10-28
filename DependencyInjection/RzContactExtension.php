@@ -34,6 +34,7 @@ class RzContactExtension extends Extension
         }
 
         $loader->load('model.xml');
+        $loader->load('block.xml');
 
         $config = $this->addDefaults($config);
         $this->configureAdminClass($config, $container);

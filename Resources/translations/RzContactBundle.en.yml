@@ -41,4 +41,18 @@ form:
   label_message: Message
 
 
+btn:
+  contact_us:
+    submit: Submit
+
+
+message:
+  contact_us:
+    error:
+      invalid_format: Invalid request format.
+      invalid_form: Invalid form.
+    success: Inquiry was successfully submited.
+  global:
+    error: Invalid field.
+
 

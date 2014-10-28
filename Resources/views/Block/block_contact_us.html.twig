@@ -1,0 +1,41 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+{% set form_url = rz_render_page_url('rz_contact_us_form_block') %}
+{% if form_url == '' %}
+    <div class="alert alert-error"><strong>Route "rz_contact_us_form_block" is not set!</strong></div>
+{% else %}
+    <div class="rz-contact-us-form-container">
+        <form id="rz_contact_us_block_form" class="contact-form" action="{{ path(form_url) }}" {{ form_enctype(form) }} method="POST" novalidate>
+            <p class="form_info">{{ 'form.label_sender_name'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+            {{ form_widget(form.senderName, { 'attr': {'class': 'span12'} }) }}
+            <span for="{{ form.senderName.vars.id }}"></span>
+            <p class="form_info">{{ 'form.label_sender_email'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+            {{ form_widget(form.senderEmail, { 'attr': {'class': 'span12'} }) }}
+            <span for="{{ form.senderEmail.vars.id }}"></span>
+            <p class="form_info">{{ 'form.label_subject'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+            {{ form_widget(form.subject, { 'attr': {'class': 'span12'} }) }}
+            <span for="{{ form.subject.vars.id }}"></span>
+            <p class="form_info">{{ 'form.label_message'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+            {{ form_widget(form.message, { 'attr': {'class': 'span12'} }) }}
+            <span for="{{ form.message.vars.id }}"></span>
+            {{ form_rest(form) }}
+            <div class="contact-us-submit">
+                <input class="btn btn-rzcms-theme btn-register" type="submit" value="{{ 'btn.contact_us.submit'|trans({}, 'RzContactBundle') }}" />
+            </div>
+        </form>
+    </div>
+    {% spaceless %}
+    <script>
+        jQuery(document).ready(function () {
+            var rz_contact_us_form_ajax = new rz_contact_us_form({
+                id: 'rz_contact_us_block_form',
+                field_container: 'rz-contact-us-form-container',
+                url: '{% if form_url %}{{ path(form_url) }}{% endif%}',
+                error_container: 'span',
+            });
+        });
+    </script>
+    {% endspaceless %}
+{% endif %}
+{% endblock %}

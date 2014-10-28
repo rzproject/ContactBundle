@@ -1,6 +1,26 @@
-<form class="contact-form" action="" {{ form_enctype(form) }} method="post">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" class="submit" value="{% trans %}Submit contact form{% endtrans %}" />
+<form class="contact-form" action="{{ path('rz_contact_us_form_block') }}" {{ form_enctype(form) }} method="POST" novalidate>
+    <p class="form_info">{{ 'form.label_sender_name'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+    {{ form_widget(form.senderName, { 'attr': {'class': 'span12'} }) }}
+    <div class="form-errors">
+        {{ form_errors(form.senderName) }}
+    </div>
+    <p class="form_info">{{ 'form.label_sender_email'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+    {{ form_widget(form.senderEmail, { 'attr': {'class': 'span12'} }) }}
+    <div class="form-errors">
+        {{ form_errors(form.senderEmail) }}
+    </div>
+    <p class="form_info">{{ 'form.label_subject'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+    {{ form_widget(form.subject, { 'attr': {'class': 'span12'} }) }}
+    <div class="form-errors">
+        {{ form_errors(form.subject) }}
+    </div>
+    <p class="form_info">{{ 'form.label_message'|trans({}, 'RzContactBundle') }} <span class="required">*</span></p>
+    {{ form_widget(form.message, { 'attr': {'class': 'span12'} }) }}
+    <div class="form-errors">
+        {{ form_errors(form.message) }}
+    </div>
+    {{ form_rest(form) }}
+    <div class="contact-us-submit">
+        <input class="btn btn-rzcms-theme btn-register" type="submit" value="{{ 'btn.contact_us.submit'|trans({}, 'RzContactBundle') }}" />
     </div>
 </form>

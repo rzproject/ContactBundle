@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="rz_contact.block.contact.contact_us_form.class">Rz\ContactBundle\Block\ContactUsFormBlockService</parameter>
+    </parameters>
+
+    <services>
+        <service id="rz_contact.block.contact.contact_us_form" class="%rz_contact.block.contact.contact_us_form.class%">
+            <tag name="sonata.block" />
+            <argument>rz_contact.block.contact.contact_us_form</argument>
+            <argument type="service" id="templating" />
+            <argument type="service" id="service_container" />
+        </service>
+    </services>
+</container>
