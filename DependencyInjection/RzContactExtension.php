@@ -34,7 +34,6 @@ class RzContactExtension extends Extension
         }
 
         $loader->load('model.xml');
-        $loader->load('block.xml');
 
         $config = $this->addDefaults($config);
         $this->configureAdminClass($config, $container);
@@ -49,6 +48,9 @@ class RzContactExtension extends Extension
         $loader->load('spam_detection.xml');
         $this->configureSpamDetection($config, $container);
         $this->configureConnectors($config, $container);
+
+        $loader->load('block.xml');
+        $this->configureBlocks($config, $container);
 
 //        $loader->load('spam_detection.xml');
 //        $loader->load('form.xml');
@@ -217,6 +219,28 @@ class RzContactExtension extends Extension
                 $this->$mappingMethod($attributes, $container);
             }
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function configureBlocks($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.block.contact.contact_us_form.class', $config['contact']['block']['class']);
+        $container->setParameter('rz_contact.block.contact.contact_us_form.default_template', $config['contact']['block']['default_template']);
+
+        if (isset($config['contact']['block']['templates'])) {
+
+            $templates = $config['contact']['block']['templates'];
+            $choices = array();
+            foreach($templates as $template) {
+                $choices[$template['template']] = $template['label'];
+            }
+            $container->setParameter('rz_contact.block.contact.contact_us_form.template_choices', $choices);
+        } else {
+            $container->setParameter('rz_contact.block.contact.contact_us_form.template_choices', array('RzContactBundle:Block:block_contact_us.html.twig'=>'Contact Us Default'));
+        }
+
     }
 
 

@@ -47,7 +47,7 @@ class ContactUsFormBlockService extends BaseBlockService
     {
         $resolver->setDefaults(array(
             'title'   => false,
-            'template' => 'RzContactBundle:Block:block_contact_us.html.twig'
+            'template' =>  $this->container->getParameter('rz_contact.block.contact.contact_us_form.default_template')
         ));
     }
 
@@ -59,6 +59,7 @@ class ContactUsFormBlockService extends BaseBlockService
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
                 array('title', 'text', array('required' => false, 'label'=> 'Title')),
+                array('template', 'choice', array('required' => true, 'choices' => $this->container->getParameter('rz_contact.block.contact.contact_us_form.template_choices'))),
             )
         ));
     }
