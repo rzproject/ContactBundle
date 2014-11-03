@@ -37,7 +37,7 @@ class ContactUsFormBlockService extends BaseBlockService
      */
     public function getName()
     {
-        return 'Ask The Expert User';
+        return 'Rz Contact Us Form';
     }
 
     /**
