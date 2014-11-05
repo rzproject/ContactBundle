@@ -103,14 +103,14 @@ class ContactUsFormBlockService extends BaseBlockService
 //        );
 //    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getJavascripts($media)
-    {
-        return array(
-            '/bundles/rmzamorajquery/jquery-plugins/validation/dist/jquery.validate.js',
-            '/bundles/rzcontact/js/contact-form.js',
-        );
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function getJavascripts($media)
+//    {
+//        return array(
+//            '/bundles/rmzamorajquery/jquery-plugins/validation/dist/jquery.validate.js',
+//            '/bundles/rzcontact/js/contact-form.js',
+//        );
+//    }
 }
