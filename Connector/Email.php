@@ -24,7 +24,8 @@ class Email extends BaseConnector implements ConnectorInterface
             ->setSubject('Mosaic Platform | ' . $contact->getSubject())
             ->setFrom($contact->getSenderEmail(), $contact->getSenderName())
             ->setTo($this->container->getParameter('rz_contact.email.recipients'))
-            ->setBody($body);
+            ->setBody($body)
+            ->setContentType("text/html");
 
         $mailer->send($mail);
 
