@@ -18,11 +18,13 @@ class Email extends BaseConnector implements ConnectorInterface
     {
         $mailer = $this->container->get('mailer');
 
+        $body = $this->container->get('templating')->render('RzContactBundle:Connector:email.html.twig', array('contact'=>$contact));
+
         $mail = \Swift_Message::newInstance()
             ->setSubject('[Contact] ' . $contact->getSubject())
             ->setFrom($contact->getSenderEmail(), $contact->getSenderName())
             ->setTo($this->container->getParameter('rz_contact.email.recipients'))
-            ->setBody($contact->getMessage());
+            ->setBody($body);
 
         $mailer->send($mail);
 
