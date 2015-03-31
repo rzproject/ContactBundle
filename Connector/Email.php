@@ -21,7 +21,7 @@ class Email extends BaseConnector implements ConnectorInterface
         $body = $this->container->get('templating')->render('RzContactBundle:Connector:email.html.twig', array('contact'=>$contact));
 
         $mail = \Swift_Message::newInstance()
-            ->setSubject('[Contact] ' . $contact->getSubject())
+            ->setSubject('Mosaic Platform | ' . $contact->getSubject())
             ->setFrom($contact->getSenderEmail(), $contact->getSenderName())
             ->setTo($this->container->getParameter('rz_contact.email.recipients'))
             ->setBody($body);
