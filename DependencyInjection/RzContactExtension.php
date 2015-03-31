@@ -61,10 +61,10 @@ class RzContactExtension extends Extension
 //            $this->doConfigLoad($config_unit, $container);
 //        }
 //
-//        // load connector configs
-//        foreach ($config['connectors'] as $connector => $attributes) {
-//            $loader->load("connector_$connector.xml");
-//        }
+        // load connector configs
+        foreach ($config['connectors'] as $connector => $attributes) {
+            $loader->load("connector_$connector.xml");
+        }
 //
 //        if(isset($config['contact']['form']['view']))
 //        {
