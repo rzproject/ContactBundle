@@ -23,6 +23,7 @@ class Email extends BaseConnector implements ConnectorInterface
         $mail = \Swift_Message::newInstance()
             ->setSubject('Mosaic Platform | ' . $contact->getSubject())
             ->setFrom($contact->getSenderEmail(), $contact->getSenderName())
+            ->setReplyTo($contact->getSenderEmail(), $contact->getSenderName())
             ->setTo($this->container->getParameter('rz_contact.email.recipients'))
             ->setBody($body)
             ->setContentType("text/html");
