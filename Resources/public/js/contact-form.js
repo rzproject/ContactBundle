@@ -74,7 +74,7 @@ rz_contact_us_form.prototype = {
     resetErrors: function() {
         var that = this;
         //cleanup messages
-        jQuery(sprintf('#%s', that.id)).find(sprintf("%s",that.error_container)).html( "" );
+        jQuery(sprintf('#%s', that.id)).find(".alert").remove();
         jQuery(sprintf('#%s', that.id)).find('.popask-error').remove();
     },
 
