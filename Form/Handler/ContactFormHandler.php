@@ -56,8 +56,18 @@ class ContactFormHandler
 
             if ($this->form->isValid()) {
                 if($this->timeProvider->isFormTimeValid($this->form->getName(), $options)) {
-                    $this->onSuccess($contact);
-                    return true;
+                    if($this->contactManager->findOneBy(array('senderEmail'=>$contact->getSenderEmail(),
+                                                              'subject'=>$contact->getSubject(),
+                                                              'senderName'=>$contact->getSenderName(),
+                                                              'message'=>$contact->getMessage()
+                                                             ))) {
+
+                        $this->form->addError(new FormError('Spam Detected!'));
+                        return false;
+                    } else {
+                        $this->onSuccess($contact);
+                        return true;
+                    }
                 } else {
                     $errorMessage = $options['message'];
                     $this->form->addError(new FormError($errorMessage));
@@ -75,6 +85,6 @@ class ContactFormHandler
         }
 
         $this->eventDispatcher->dispatch(Events::onContactRequest, new Event\ContactEvent($contact));
-        $this->contactManager->save($contact);        
+        $this->contactManager->save($contact);
     }
 }

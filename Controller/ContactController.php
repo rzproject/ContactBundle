@@ -60,7 +60,6 @@ class ContactController extends Controller
         $formHandler = $this->get('rz_contact.form.contact.handler');
 
         if ($formHandler->process($contact)) {
-            $timeProvider->removeFormTime($form->getName());
             if ('json' == $request->get('_format')) {
                 $message = $this->get('translator')->trans('message.contact_us.success',array(),'RzContactBundle');
                 return new JsonResponse(array('message' => $message));
