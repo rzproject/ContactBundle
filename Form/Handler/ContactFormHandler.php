@@ -49,7 +49,7 @@ class ContactFormHandler
         $this->form->setData($contact);
 
         //TODO: put it on config & dependecy injection
-        $options = array('min' => 30, 'max' => 3600, 'message' => 'Opps you submited the form too quickly.');
+        $options = array('min' => 10, 'max' => 3600, 'message' => 'Opps you submited the form too quickly.');
 
         if ('POST' == $this->request->getMethod()) {
             $this->form->handleRequest($this->request);
@@ -60,9 +60,6 @@ class ContactFormHandler
                     return true;
                 } else {
                     $errorMessage = $options['message'];
-//                if (null !== $this->translator) {
-//                    $errorMessage = $this->translator->trans($errorMessage, array(), $this->translationDomain);
-//                }
                     $this->form->addError(new FormError($errorMessage));
                 }
             }
@@ -73,11 +70,11 @@ class ContactFormHandler
 
     protected function onSuccess(ContactInterface $contact)
     {
-        $this->eventDispatcher->dispatch(Events::onContactRequest, new Event\ContactEvent($contact));
-        $this->contactManager->save($contact);
-
         if($this->timeProvider->hasFormTime($this->form->getName())) {
             $this->timeProvider->removeFormTime($this->form->getName());
         }
+
+        $this->eventDispatcher->dispatch(Events::onContactRequest, new Event\ContactEvent($contact));
+        $this->contactManager->save($contact);        
     }
 }

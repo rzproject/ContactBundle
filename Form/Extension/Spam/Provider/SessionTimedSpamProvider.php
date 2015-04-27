@@ -27,7 +27,6 @@ class SessionTimedSpamProvider implements TimedSpamProviderInterface
     {
         $valid = true;
         $startTime = $this->getFormTime($name);
-
         /*
          * No value stored, so this can't be valid or session expired.
          */
@@ -45,18 +44,21 @@ class SessionTimedSpamProvider implements TimedSpamProviderInterface
             /** @var TYPE_NAME $startTime */
             $minTime = clone $startTime;
             $minTime->modify(sprintf('+%d seconds', $options['min']));
-            $valid &= $minTime < $currentTime;
+            if ($minTime > $currentTime) {
+                $valid = false;
+            };
         }
 
         /**
          * Check against a maximum time
          */
-        if($options['max'] !== null){
+        if( $valid && $options['max'] !== null){
             /** @var TYPE_NAME $startTime */
             $maxTime = clone $startTime;
             $maxTime->modify(sprintf('+%d seconds', $options['max']));
-
-            $valid &= $maxTime > $currentTime;
+            if($maxTime < $currentTime) {
+                $valid = true;
+            }
         }
 
         return $valid;
