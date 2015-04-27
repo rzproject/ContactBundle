@@ -1,11 +1,11 @@
 <?php
 
-namespace Rz\ContactBundle\Entity;
+namespace Rz\ContactBundle\Document;
 
 use Doctrine\ORM\DocumentManager;
-use Rz\ContactBundle\Manager\ContactManager as BaseContactManager;
+use Sonata\CoreBundle\Model\BaseDocumentManager;
 
-class ContactManager extends BaseContactManager
+class ContactManager extends BaseDocumentManager
 {
     protected $dm;
     protected $class;
