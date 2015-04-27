@@ -84,7 +84,7 @@ class ContactController extends Controller
         $errors['fields'] = array();
 
         foreach ($form->getErrors() as $error) {
-            $errors['global'][] = $error->getMessage();
+            $errors['global'][] = $this->get('translator')->trans($error->getMessage(),array(),'RzContactBundle');
         }
 
         $errors['fields'] = $this->serialize($form);

@@ -52,34 +52,10 @@ class RzContactExtension extends Extension
         $loader->load('block.xml');
         $this->configureBlocks($config, $container);
 
-//        $loader->load('spam_detection.xml');
-//        $loader->load('form.xml');
-//        $loader->load('model.xml');
-//
-//        foreach($configs as $config_unit)
-//        {
-//            $this->doConfigLoad($config_unit, $container);
-//        }
-//
         // load connector configs
         foreach ($config['connectors'] as $connector => $attributes) {
             $loader->load("connector_$connector.xml");
         }
-//
-//        if(isset($config['contact']['form']['view']))
-//        {
-//            $container->setParameter('rz_contact.contact.form.view', $config['contact']['form']['view']);
-//        }
-//        else
-//        {
-//            $container->setParameter('rz_contact.contact.form.view', NULL);
-//        }
-//
-//        $container->setAlias('rz_contact.contact.form.handler', $config['contact']['form']['handler']);
-//
-//        $this->remapParametersNamespaces($config['contact'], $container, array(
-//            'form' => 'rz_contact.contact.form.%s',
-//        ));
     }
 
     /**
@@ -243,53 +219,6 @@ class RzContactExtension extends Extension
 
     }
 
-
-
-//    public function doConfigLoad(array $config, ContainerBuilder $container)
-//    {
-//        // Connectors
-//        if(!isset($config['connectors']))
-//        {
-//            $config['connectors'] = array();
-//        }
-//
-//        foreach($config['connectors'] as $connector => $attributes) {
-//            // custom connectors
-//            if(array_key_exists("class", (array) $attributes))
-//            {
-//                // TODO
-//                continue;
-//            }
-//
-//            // built-in connector configuration
-//            $mappingMethod = "map" . ucfirst($connector) . "ConnectorParameters";
-//            if(method_exists($this, $mappingMethod))
-//            {
-//                $this->$mappingMethod($attributes, $container);
-//            }
-//        }
-//
-//        // Contact form and entities
-//        if(array_key_exists("model", $config) && isset($config['model'])) {
-//            $container->setParameter('rz_contact.model.contact.class', $config['model']);
-//        }
-//
-//        if(array_key_exists("form", $config) && isset($config['form'])) {
-//            $container->setParameter('rz_contact.form.contact.class', $config['form']);
-//        }
-//
-//        //add the spam detection
-//        if(isset($config['spam_detector']) && isset($config['spam_detector']['class'])) {
-//            $container->setParameter('rz_contact.spam_detector.class', $config['spam_detector']['class']);
-//        }
-//
-//        if(isset($config['spam_detector']) && isset($config['spam_detector']['service'])) {
-//            $container->setAlias('rz_spam_detector', $config['spam_detector']['service']);
-//        } else {
-//            $container->setAlias('rz_spam_detector', 'rz_contact.spam_detector.stub');
-//        }
-//    }
-//
     public function mapEmailConnectorParameters($config, ContainerBuilder $container)
     {
         $container->setParameter('rz_contact.email.recipients', $config['recipients']);

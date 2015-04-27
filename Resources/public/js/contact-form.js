@@ -31,7 +31,7 @@ rz_contact_us_form.prototype = {
         event.stopPropagation();
         var formObj = jQuery(form);
 
-        //jQuery.blockUI({ message:'Processing'});
+        jQuery.blockUI({ message:'Processing'});
 
         jQuery(formObj).ajaxSubmit({
             type: formObj.attr('method'),
@@ -43,7 +43,7 @@ rz_contact_us_form.prototype = {
                 that.resetErrors();
                 that.resetForm();
                 formObj.prepend(sprintf('<div class="alert alert-success"><strong>%s</strong></div>', data.message));
-                //jQuery.unblockUI();
+                jQuery.unblockUI();
             },
             error: function(data) {
                 var msg = JSON.parse(data.responseText);
@@ -55,7 +55,17 @@ rz_contact_us_form.prototype = {
                         .find( sprintf('%s[for="%s"]',that.error_container, index) )
                         .html( value );
                 });
-                formObj.prepend(sprintf('<div class="alert alert-error"><strong>%s</strong></div>', msg.message));
+
+                var msgs = '';
+                jQuery.each(msg.messages.global, function(index, value){
+                    msgs +=  ' '+value;
+                });
+                if(msgs) {
+                    formObj.prepend(sprintf('<div class="alert alert-error"><strong>%s</strong></div>', msgs));
+                } else {
+                    formObj.prepend(sprintf('<div class="alert alert-error"><strong>%s</strong></div>', msg.message));
+                }
+
                 jQuery.unblockUI();
             }
         });
