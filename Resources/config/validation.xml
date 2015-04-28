@@ -18,6 +18,7 @@
             </constraint>
             <constraint name="Email">
                 <option name="message">Please add a valid email address</option>
+                <option name="checkMX">true</option>
             </constraint>
         </property>
 
