@@ -155,6 +155,15 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('service')->end()
                     ->end()
                 ->end()
+                ->arrayNode('settings')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('min_time_to_submit')->defaultValue(10)->cannotBeEmpty()->end()
+                        ->scalarNode('max_time_to_submit')->defaultValue(3600)->cannotBeEmpty()->end()
+                        ->scalarNode('no_days_to_validate')->defaultValue(1)->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
             ->end();
     }
 

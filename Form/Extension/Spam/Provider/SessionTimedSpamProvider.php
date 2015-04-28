@@ -7,10 +7,16 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class SessionTimedSpamProvider implements TimedSpamProviderInterface
 {
     protected $session;
+    protected $minTime;
+    protected $maxTime;
 
-    public function __construct(Session $session)
+    public function __construct(Session $session,
+                                $minTime = 10,
+                                $maxTime = 3600)
     {
         $this->session = $session;
+        $this->minTime = $minTime;
+        $this->maxTime = $maxTime;
     }
 
     public function generateFormTime($name)
@@ -23,7 +29,7 @@ class SessionTimedSpamProvider implements TimedSpamProviderInterface
         return $startTime;
     }
 
-    public function isFormTimeValid($name, array $options)
+    public function isFormTimeValid($name)
     {
         $valid = true;
         $startTime = $this->getFormTime($name);
@@ -37,25 +43,17 @@ class SessionTimedSpamProvider implements TimedSpamProviderInterface
         $currentTime = new \DateTime();
 
 
-        /**
-         * Check against a minimum time
-         */
-        if($options['min'] !== null){
-            /** @var TYPE_NAME $startTime */
-            $minTime = clone $startTime;
-            $minTime->modify(sprintf('+%d seconds', $options['min']));
-            if ($minTime > $currentTime) {
-                $valid = false;
-            };
-        }
+        /** @var TYPE_NAME $startTime */
+        $minTime = clone $startTime;
+        $minTime->modify(sprintf('+%d seconds', $this->minTime));
+        if ($minTime > $currentTime) {
+            $valid = false;
+        };
 
-        /**
-         * Check against a maximum time
-         */
-        if( $valid && $options['max'] !== null){
+        if( $valid){
             /** @var TYPE_NAME $startTime */
             $maxTime = clone $startTime;
-            $maxTime->modify(sprintf('+%d seconds', $options['max']));
+            $maxTime->modify(sprintf('+%d seconds', $this->maxTime));
             if($maxTime < $currentTime) {
                 $valid = true;
             }

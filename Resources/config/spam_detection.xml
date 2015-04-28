@@ -13,6 +13,8 @@
         <service id="rz_contact.spam_detector.stub" class="%rz_contact.spam_detector.class%"></service>
         <service id="rz_contact.form.extension.provider.timed_spam" class="%rz_contact.form.extension.provider.timed_spam.class%">
             <argument type="service" id="session" />
+            <argument>%rz_contact.settings.min_time_to_submit%</argument>
+            <argument>%rz_contact.settings.max_time_to_submit%</argument>
         </service>
     </services>
 

@@ -9,7 +9,7 @@
         <field name="senderName" column="sender_name" type="string" length="255" />
         <field name="subject" column="subject" type="string" length="255" />
         <field name="message" column="message" type="string" length="255"  />
-        <field name="createdAt" column="createAt" type="datetime" />
+        <field name="createdAt" column="created_at" type="datetime" />
         <field name="updatedAt"    type="datetime"   column="updated_at" />
 
         <lifecycle-callbacks>

@@ -37,5 +37,5 @@ interface TimedSpamProviderInterface
      * @param array $options
      * @return boolean $valid
      */
-    public function isFormTimeValid($name, array $options);
+    public function isFormTimeValid($name);
 }

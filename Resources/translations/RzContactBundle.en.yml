@@ -51,7 +51,7 @@ message:
     error:
       invalid_format: Invalid request format.
       invalid_form: Invalid form.
-      invalid_spam_detected: Spam detected!
+      invalid_spam_detected: Data was already submitted! Try again later.
       invalid_spam_too_fast: Your submitting to form too quickly!
     success: Inquiry was successfully submited.
   global:

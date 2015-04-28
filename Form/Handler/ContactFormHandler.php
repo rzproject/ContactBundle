@@ -30,14 +30,23 @@ class ContactFormHandler
     protected $contactManager;
     protected $eventDispatcher;
     protected $timeProvider;
+    protected $noOfDaysToValidate;
 
-    public function __construct(Form $form, Request $request, ManagerInterface $contactManager, EventDispatcherInterface $eventDispatcher, TimedSpamProviderInterface $timeProvider)
+
+    public function __construct(Form $form,
+                                Request $request,
+                                ManagerInterface $contactManager,
+                                EventDispatcherInterface $eventDispatcher,
+                                TimedSpamProviderInterface $timeProvider,
+                                $noOfDaysToValidate = 1)
     {
         $this->form            = $form;
         $this->request         = $request;
         $this->contactManager  = $contactManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->timeProvider = $timeProvider;
+        $this->noOfDaysToValidate = $noOfDaysToValidate;
+
     }
 
     public function process(ContactInterface $contact)
@@ -45,21 +54,15 @@ class ContactFormHandler
         if (null === $contact) {
             $contact = $this->contactManager->createContact();
         }
-
         $this->form->setData($contact);
-
-        //TODO: put it on config & dependecy injection
-        $options = array('min' => 10, 'max' => 3600, 'message' => 'Opps you submited the form too quickly.');
-
         if ('POST' == $this->request->getMethod()) {
             $this->form->handleRequest($this->request);
             if ($this->form->isValid()) {
-                if($this->timeProvider->isFormTimeValid($this->form->getName(), $options)) {
-                    if($this->contactManager->findOneBy(array('senderEmail'=>$contact->getSenderEmail(),
-                                                              'subject'=>$contact->getSubject(),
-                                                              'senderName'=>$contact->getSenderName()
-                                                             ))) {
-
+                if($this->timeProvider->isFormTimeValid($this->form->getName())) {
+                    if($this->contactManager->findTimedDuplicate($contact->getSenderName(),
+                                                                 $contact->getSenderEmail(),
+                                                                 $contact->getContactNo(),
+                                                                 $this->noOfDaysToValidate)) {
                         $this->form->addError(new FormError('message.contact_us.error.invalid_spam_detected'));
                         return false;
                     } else {

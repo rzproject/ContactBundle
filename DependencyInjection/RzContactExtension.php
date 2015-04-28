@@ -56,6 +56,8 @@ class RzContactExtension extends Extension
         foreach ($config['connectors'] as $connector => $attributes) {
             $loader->load("connector_$connector.xml");
         }
+
+        $this->configureSettings($config, $container);
     }
 
     /**
@@ -262,6 +264,21 @@ class RzContactExtension extends Extension
                 }
             }
         }
+    }
+
+    /**
+     * @param array                                                   $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return void
+     */
+    public function configureSettings($config, ContainerBuilder $container)
+    {
+        $container->setParameter('rz_contact.settings.min_time_to_submit', $config['settings']['min_time_to_submit']);
+        $container->setParameter('rz_contact.settings.max_time_to_submit', $config['settings']['max_time_to_submit']);
+        $container->setParameter('rz_contact.settings.no_days_to_validate', $config['settings']['no_days_to_validate']);
+
+
     }
 
 }
