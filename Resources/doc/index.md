@@ -1,3 +1,6 @@
+ABOUT
+=====
+
 Provides a simple but powerful contact form built onto the Observer Pattern.
 Plug any listener you want to your contact form's submission
 
@@ -154,5 +157,3 @@ or if you want a whole new service:
     rz_contact:
         spam_detector:
             service: my_detector_service
-
-
