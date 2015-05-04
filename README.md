@@ -1,1 +1,4 @@
-./Resources/doc/index.rst
+ContactBundle
+===========
+
+**STABLE VERSION**
